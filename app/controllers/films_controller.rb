@@ -11,6 +11,7 @@ class FilmsController < ApplicationController
   end
 
   def new
+    @film = Film.new
   end
 
   private
