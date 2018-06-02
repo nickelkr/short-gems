@@ -7,6 +7,7 @@ class FilmsController < ApplicationController
   end
 
   def destroy
+    Film.destroy(params[:id])
   end
 
   def new

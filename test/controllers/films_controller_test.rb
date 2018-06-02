@@ -14,6 +14,12 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get destroy" do
+    film = films(:one)
+    assert_difference('Film.count', -1) do
+      delete film_url(film)
+    end
+
+    assert_response :success
   end
 
   test "should get new" do
