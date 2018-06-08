@@ -1,2 +1,12 @@
-<h1>Films#index</h1>
-<p>Find me in app/views/films/index.html.erb</p>
+<h3>This week's films</h3>
+
+<% @films.each do |film| %>
+  <iframe width="560"
+    height="315"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+    src="https://www.youtube.com/embed/<%= film.external_id.split('/').last %>">
+  </iframe>
+  <br />
+<% end %>

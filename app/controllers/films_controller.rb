@@ -4,6 +4,7 @@ class FilmsController < ApplicationController
   end
 
   def index
+    @films = Film.all.order(created_at: :desc)
   end
 
   def destroy
