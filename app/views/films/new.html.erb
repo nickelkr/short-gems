@@ -1,0 +1,10 @@
+<h1>Films#new</h1>
+<%= form_for @film do |f| %>
+  Title:
+  <%= f.text_field :title %>
+  Runtime:
+  <%= f.number_field :runtime %>
+  Link:
+  <%= f.text_field :external_id %>
+  <%= f.submit 'Submit' %>
+<% end %>
