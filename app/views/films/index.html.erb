@@ -1,12 +1,20 @@
 <h3>This week's films</h3>
 
 <% @films.each do |film| %>
-  <iframe width="560"
-    height="315"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen
-    src="https://www.youtube.com/embed/<%= film.external_id.split('/').last %>">
-  </iframe>
+  <div class="row">
+    <div class="card mx-auto">
+      <div class="card-body">
+        <h5 class="card-title"><%= film.title %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= film.runtime %> minutes</h6>
+        <iframe width="560"
+          height="315"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+          src="https://www.youtube.com/embed/<%= film.external_id.split('/').last %>">
+        </iframe>
+      </div>
+    </div>
+  </div>
   <br />
 <% end %>
