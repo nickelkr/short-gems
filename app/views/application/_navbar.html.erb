@@ -1,4 +1,8 @@
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand" href="/">ShortGems</a>
-  <a class="nav-link" href="<%= new_user_session_path %>">Sign In</a>
+  <% if user_signed_in? %>
+    <%= link_to 'Log Out', destroy_user_session_path, { method: :delete, class: 'nav-link' } %>
+  <% else %>
+    <a class="nav-link" href="<%= new_user_session_path %>">Sign In</a>
+  <% end %>
 </nav>

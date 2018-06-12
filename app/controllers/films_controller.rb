@@ -1,8 +1,8 @@
 class FilmsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: %i[create destroy new]
 
   def create
-    Film.create(film_params)
+    current_user.films.create(film_params)
   end
 
   def index
