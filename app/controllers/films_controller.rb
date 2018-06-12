@@ -1,4 +1,6 @@
 class FilmsController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     Film.create(film_params)
   end

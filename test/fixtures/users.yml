@@ -6,6 +6,10 @@
 #
 kyle:
   email: kyle@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, '12345678') %>
+  confirmed_at: <%= Time.now %>
 
 john:
   email: john@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, '12345567890') %>
+  confirmed_at: <%= Time.now %>
