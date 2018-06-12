@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  external_id: 'https://youtu.be/HkqIVdMt_bs'
+  external_id: 'HkqIVdMt_bs'
   title: 'Hotel Chevalier'
   runtime: 13
 
 two:
-  external_id: 'https://youtu.be/otxlzSMcBTo'
+  external_id: 'otxlzSMcBTo'
   title: 'The Big Shave'
   runtime: 5
