@@ -1,10 +1,28 @@
-<h1>Films#new</h1>
-<%= form_for @film do |f| %>
-  Title:
-  <%= f.text_field :title %>
-  Runtime:
-  <%= f.number_field :runtime %>
-  Link:
-  <%= f.text_field :external_id %>
-  <%= f.submit 'Submit' %>
-<% end %>
+<br />
+<div class="row">
+  <div class="card mx-auto">
+    <div class="card-body">
+      <h5 class="card-title">Add Film</h5>
+      <%= form_for @film do |f| %>
+        <div class="row">
+          <div class="col-4">Title:</div>
+          <div class="col-8"><%= f.text_field :title %></div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-4">Runtime:</div>
+          <div class="col-8"><%= f.number_field :runtime %></div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-4">Link:</div>
+          <div class="col-8"><%= f.text_field :external_id %></div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-2"><%= f.submit 'Submit' %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
