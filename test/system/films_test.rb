@@ -20,4 +20,20 @@ class FilmsTest < ApplicationSystemTestCase
       click_on 'Submit'
     end
   end
+
+  test 'deleting a film' do
+    @user = users(:kyle)
+    
+    visit new_user_session_path
+
+    fill_in 'user_email', with: @user.email
+    fill_in 'user_password', with: KYLE_PASS
+    click_on 'Log in'
+
+    visit films_path
+
+    assert_difference('Film.count', -1) do
+      click_link("remove-#{films(:one).id}")
+    end
+  end
 end
