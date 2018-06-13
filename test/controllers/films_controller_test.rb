@@ -18,6 +18,8 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
         post films_url,
           params: params
       end
+
+      assert_redirected_to(new_user_session_path)
     end
 
     test "should get create" do
@@ -28,6 +30,9 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
         post films_url, 
              params: params
       end
+
+      assert_redirected_to(films_path)
+      assert_equal('Film created', flash[:success])
     end
 
   test "should get index" do
@@ -70,15 +75,5 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to(films_path)
     assert_equal('Film not found', flash[:error])
-  end
-
-  test "should get new" do
-    @user = users(:kyle)
-    sign_in(@user)
-
-    film = films(:two)
-    assert_no_difference('Film.count') do
-      delete film_url(film)
-    end
   end
 end
