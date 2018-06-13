@@ -28,8 +28,6 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
         post films_url, 
              params: params
       end
-
-      assert_response :success
     end
 
   test "should get index" do
