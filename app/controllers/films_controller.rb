@@ -13,7 +13,18 @@ class FilmsController < ApplicationController
   end
 
   def destroy
-    Film.destroy(params[:id])
+    film = Film.where(id: params[:id]).first
+    
+    if film.nil?
+      flash[:error] = "Film not found"
+    elsif film.user_id == current_user.id
+      film.destroy
+      flash[:success] = "Film removed"
+    else
+      flash[:error] = "You are not allowed to remove this film"
+    end
+
+    redirect_to films_path
   end
 
   def new

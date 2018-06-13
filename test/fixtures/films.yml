@@ -4,8 +4,9 @@ one:
   external_id: 'HkqIVdMt_bs'
   title: 'Hotel Chevalier'
   runtime: 13
+  user: kyle
 
 two:
   external_id: 'otxlzSMcBTo'
   title: 'The Big Shave'
-  runtime: 5
+  runtime: john
