@@ -12,6 +12,18 @@
   <body>
     <div class="container">
       <%= render 'navbar' %>
+      <br />
+      <% flash.each do |key, value| %>
+        <% key = key == 'notice' ? 'info' : key %>
+        <% key = key == 'alert' ? 'danger' : key %>
+        <div class="alert alert-<%= key %> alert-dismissable fade show">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <%= value %>
+        </div>
+      <% end %>
+
       <%= yield %>
     </div>
   </body>

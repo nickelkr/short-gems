@@ -3,6 +3,8 @@ class FilmsController < ApplicationController
 
   def create
     current_user.films.create(film_params)
+    flash[:success] = 'Film created'
+
     redirect_to films_path
   end
 
