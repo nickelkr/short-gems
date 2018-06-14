@@ -10,8 +10,8 @@
   </head>
 
   <body>
+    <%= render 'navbar' %>
     <div class="container">
-      <%= render 'navbar' %>
       <br />
       <% flash.each do |key, value| %>
         <% key = key == 'notice' ? 'info' : key %>
