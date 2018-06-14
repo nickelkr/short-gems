@@ -13,7 +13,7 @@
           allowfullscreen
           src="https://www.youtube.com/embed/<%= film.external_id %>">
         </iframe>
-        <% if current_user && film.user_id == current_user.id %>
+        <% if current_user && (film.user_id == current_user.id || current_user.roles.admin?) %>
           <br />
           <%= link_to 'Remove film', film_path(film.id), { method: :delete, id: "remove-#{film.id}" } %>
         <% end %>
