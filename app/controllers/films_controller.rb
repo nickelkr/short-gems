@@ -29,6 +29,7 @@ class FilmsController < ApplicationController
 
   def new
     @film = Film.new
+    flash[:warning] = 'We currently only support YouTube, but we\'re working hard to integrate other sources.'
   end
 
   private
