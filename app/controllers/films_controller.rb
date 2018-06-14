@@ -17,7 +17,7 @@ class FilmsController < ApplicationController
     
     if film.nil?
       flash[:error] = "Film not found"
-    elsif film.user_id == current_user.id
+    elsif film.user_id == current_user.id || current_user.roles.admin?
       film.destroy
       flash[:success] = "Film removed"
     else

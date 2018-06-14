@@ -65,6 +65,19 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
     assert_equal('You are not allowed to remove this film', flash[:error])
   end
 
+  test 'admin should be able to destroy any film' do
+    @user = users(:admin)
+    sign_in(@user)
+
+    film = films(:one)
+    assert_difference('Film.count', -1) do
+      delete film_url(film)
+    end
+
+    assert_redirected_to(films_path)
+    assert_equal('Film removed', flash[:success])
+  end
+
   test 'should fail due to film not found' do
     @user = users(:kyle)
     sign_in(@user)
