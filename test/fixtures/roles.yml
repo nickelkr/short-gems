@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  references: 
-  type: 
-  active: false
+admin_admin:
+  user: admin 
+  role_type: 'admin'
+  active: true
 
-two:
-  references: 
-  type: 
+deactivated_admin:
+  user: john
+  role_type: 'admin'
   active: false
