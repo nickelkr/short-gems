@@ -9,9 +9,30 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
         { 
           title: 'Hotel Chevalier', 
           runtime: 13, 
-          external_id: 'yellowfin' 
+          external_id: 'https://youtu.be/yellowfin' 
         }
       }
+
+    test 'should not create a film with a unexpected source' do
+      @user = users(:kyle)
+      sign_in(@user)
+
+      assert_no_difference('Film.count') do
+        post films_url,
+          params: {
+            film:
+            { 
+              title: 'Something',
+              runtime: 1,
+              external_id: 'https://unsupported.com/a-npmDGK1Dc'
+            }
+        }
+      end
+
+      assert_redirected_to(films_path)
+      assert_equal('Only YouTube videos are currently supported.', flash[:error])
+    end
+
 
     test "should not create film if not logged in" do
       assert_no_difference('Film.count') do

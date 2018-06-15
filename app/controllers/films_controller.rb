@@ -2,8 +2,16 @@ class FilmsController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy new]
 
   def create
-    current_user.films.create(film_params)
-    flash[:success] = 'Film created'
+    link = film_params[:external_id]
+
+    case link
+    when /^https?:\/\/youtu\.be\/[a-zA-Z0-9_-]+$/,
+      /^https?:\/\/youtube.com\/[a-zA-Z0-9_-]+$/
+      current_user.films.create(film_params)
+      flash[:success] = 'Film created'
+    else
+      flash[:error] = 'Only YouTube videos are currently supported.'
+    end
 
     redirect_to films_path
   end
