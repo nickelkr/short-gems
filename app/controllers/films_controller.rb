@@ -6,9 +6,11 @@ class FilmsController < ApplicationController
 
     case link
     when /^https?:\/\/youtu\.be\/[a-zA-Z0-9_-]+$/,
-      /^https?:\/\/youtube.com\/[a-zA-Z0-9_-]+$/
+      /^https?:\/\/youtube.com\/[a-zA-Z0-9_-]+$/,
+      /^https?:\/\/www.youtube.com\/watch\?v=[a-zA-Z0-9_-]+$/,
+      /^https?:\/\/youtube.com\/watch\?v=[a-zA-Z0-9_-]+$/
       current_user.films.create(film_params)
-      flash[:success] = 'Film created'
+      flash[:success] = 'Film added'
     else
       flash[:error] = 'Only YouTube videos are currently supported.'
     end

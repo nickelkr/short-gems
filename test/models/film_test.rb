@@ -17,4 +17,13 @@ class FilmTest < ActiveSupport::TestCase
 
     assert_equal('HkqIVdMt_bs2', Film.last.external_id)
   end
+
+  test 'strip url type youtube link' do
+    user = users(:kyle)
+    link = 'https://www.youtube.com/watch?v=QSwvg9Rv2EI'
+
+    user.films.create(title: 'Chicago', runtime: 7, external_id: link)
+
+    assert_equal('QSwvg9Rv2EI', Film.last.external_id)
+  end
 end

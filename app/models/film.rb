@@ -7,6 +7,10 @@ class Film < ApplicationRecord
 
   private
     def extract_id
-      self.external_id = external_id.split('/').last
+      if /\/watch\?v=/ =~ external_id
+        self.external_id = external_id.split('=').last
+      else
+        self.external_id = external_id.split('/').last
+      end
     end
 end

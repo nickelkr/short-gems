@@ -33,6 +33,25 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
       assert_equal('Only YouTube videos are currently supported.', flash[:error])
     end
 
+    test 'should be able to use alternate YouTube link' do
+      @user = users(:kyle)
+      sign_in(@user)
+
+      assert_difference('Film.count') do
+        post films_url,
+          params: {
+            film:
+            {
+              title: 'Chicago',
+              runtime: 7,
+              external_id: 'https://www.youtube.com/watch?v=QSwvg9Rv2EI'
+            }
+        }
+      end
+
+      assert_redirected_to(films_path)
+      assert_equal('Film added', flash[:success])
+    end
 
     test "should not create film if not logged in" do
       assert_no_difference('Film.count') do
@@ -53,7 +72,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
       end
 
       assert_redirected_to(films_path)
-      assert_equal('Film created', flash[:success])
+      assert_equal('Film added', flash[:success])
     end
 
   test "should get index" do
