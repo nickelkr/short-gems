@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_14_103611) do
+ActiveRecord::Schema.define(version: 2018_06_20_102736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "applauses", force: :cascade do |t|
+    t.string "category"
+    t.bigint "film_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["film_id"], name: "index_applauses_on_film_id"
+    t.index ["user_id"], name: "index_applauses_on_user_id"
+  end
 
   create_table "films", force: :cascade do |t|
     t.string "external_id"
@@ -55,5 +65,7 @@ ActiveRecord::Schema.define(version: 2018_06_14_103611) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "applauses", "films"
+  add_foreign_key "applauses", "users"
   add_foreign_key "films", "users"
 end
