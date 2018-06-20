@@ -10,7 +10,7 @@ class ExternalIDExtractor
     when (yt = Youtube::Extractor.new(uri)).valid_source?
       yt.extract
     else
-      raise StandardError.new('No YouTube film found at link')
+      raise StandardError.new('Only YouTube videos are currently supported.')
     end
   end
 end

@@ -4,17 +4,16 @@ class FilmsController < ApplicationController
   def create
     link = film_params[:external_id]
 
-    case link
-    when /^https?:\/\/youtu\.be\/[a-zA-Z0-9_-]+$/,
-      /^https?:\/\/youtube.com\/[a-zA-Z0-9_-]+$/,
-      /^https?:\/\/www.youtube.com\/watch\?v=[a-zA-Z0-9_-]+$/,
-      /^https?:\/\/youtube.com\/watch\?v=[a-zA-Z0-9_-]+$/
-      current_user.films.create(film_params)
+    if external_id = ExternalIDExtractor.new(link).perform
+      current_user.films.create(film_params.merge({external_id: external_id}))
       flash[:success] = 'Film added'
     else
       flash[:error] = 'Only YouTube videos are currently supported.'
     end
 
+  rescue StandardError => e
+    flash[:error] = e.message
+  ensure
     redirect_to films_path
   end
 
