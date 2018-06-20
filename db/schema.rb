@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2018_06_20_102736) do
   enable_extension "plpgsql"
 
   create_table "applauses", force: :cascade do |t|
-    t.string "category"
+    t.integer "category"
     t.bigint "film_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false

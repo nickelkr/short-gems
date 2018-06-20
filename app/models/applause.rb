@@ -2,8 +2,8 @@ class Applause < ApplicationRecord
   belongs_to :film
   belongs_to :user
 
-  validates :category, inclusion: {
-    in: %w[directing story cinematography sound acting],
-    message: "%{value} is not a valid category"
-  }
+  enum category: %i[directing story cinematography sound acting]
+
+  validates :category, presence: true
+  validates :category, uniqueness: { scope: [:film_id, :user_id] }
 end
