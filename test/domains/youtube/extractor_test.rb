@@ -2,22 +2,35 @@ require 'test_helper'
 
 module Youtube
   class ExtractorTest < ActiveSupport::TestCase
-    test 'shortened link' do
-      link = URI.parse('https://youtu.be/yellowfin')
+    SHORT_LINK = URI.parse('https://youtu.be/yellowfin')
+    WITH_QUERY = URI.parse('https://www.youtube.com/watch?v=QSwvg9Rv2EI')
+    BAD_LINK   = URI.parse('https://unsupported.com/a-npmDGK1Dc')
+    BAD_ID     = URI.parse('http://youtu.be/.ase')
 
-      assert(Youtube::Extractor.new(link).valid_source?)
+    test 'shortened link' do
+      assert(Youtube::Extractor.new(SHORT_LINK).valid_source?)
     end
 
     test 'with query params' do
-      link = URI.parse('https://www.youtube.com/watch?v=QSwvg9Rv2EI')
-
-      assert(Youtube::Extractor.new(link).valid_source?)
+      assert(Youtube::Extractor.new(WITH_QUERY).valid_source?)
     end
 
     test 'invalid_souce? source' do
-      link = URI.parse('https://unsupported.com/a-npmDGK1Dc')
-      
-      assert_not(Youtube::Extractor.new(link).valid_source?)
+      assert_not(Youtube::Extractor.new(BAD_LINK).valid_source?)
+    end
+
+    test 'short link extraction' do
+      assert_equal('yellowfin', Youtube::Extractor.new(SHORT_LINK).extract)
+    end
+
+    test 'link w/ query params extraction' do
+      assert_equal('QSwvg9Rv2EI', Youtube::Extractor.new(WITH_QUERY).extract)
+    end
+
+    test 'bad external id extraction failure' do
+      assert_raises(StandardError, 'Invalid YouTube ID') do
+        Youtube::Extractor.new(BAD_ID).extract
+      end
     end
   end
 end
