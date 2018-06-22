@@ -14,18 +14,14 @@
           </iframe>
         </div>
         <div class="col-4">
-          <div class="card">
-            <div class="card-body">
-              <% Applause.categories.keys.each do |category| %>
-                <div class="row with-padding">
-                  <div class="col-2">
-                    <button class="btn btn-primary btn-round">+</button>
-                  </div>
-                  <div class="col-10 category-vote-label"><%= category.upcase %></div>
-                </div>
-              <% end %>
+          <% Applause.categories.keys.each do |category| %>
+            <div class="row with-padding">
+              <div class="col-2">
+                <button class="btn btn-outline-primary btn-round">+</button>
+              </div>
+              <div class="col-10 category-vote-label"><%= category.upcase %></div>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
       <% if current_user && (film.user_id == current_user.id || current_user.roles.admin?) %>
@@ -33,6 +29,15 @@
         <%= link_to 'Remove film', film_path(film.id), { method: :delete, id: "remove-#{film.id}" } %>
       <% end %>
     </div>
+    <!--
+    <div style="width: 100%; height: 20px; border-bottom: 1px solid black;">
+      <span style="font-size: 15px; background-color: #F3F5F6; padding-right: 5px;">
+        Film
+      </span>
+    </div>
+    -->
   </div>
+  <br />
+  <br />
   <br />
 <% end %>
