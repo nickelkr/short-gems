@@ -14,9 +14,14 @@
 
 @import "bootstrap";
 @import "applauses";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Oswald');
 
 .btn-round {
   border-radius: 50%;
+}
+
+body {
+  font-family: Open Sans;
 }
 
 .with-padding {
