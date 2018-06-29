@@ -19,6 +19,20 @@ class ApplausesTest < ApplicationSystemTestCase
     assert_equal('story', applause.category)
   end
 
+  test 'existing applause renders' do
+    user = users(:kyle)
+
+    visit new_user_session_path
+    fill_in 'user_email', with: user.email
+    fill_in 'user_password', with: KYLE_PASS
+    click_on 'Log in'
+
+    assert find(:xpath, "//button[@data-film-id='#{films(:one).id}'" +
+                        "and @data-category='directing'" + 
+                        "and @data-method='DELETE'" + 
+                        "and @data-category-id='#{applauses(:directing).id}']")
+  end
+
   test 'removing a applause' do
     user = users(:kyle)
 
