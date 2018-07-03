@@ -10,11 +10,13 @@ class ApplausesTest < ApplicationSystemTestCase
     fill_in 'user_password', with: KYLE_PASS
     click_on 'Log in'
 
+    film = films(:one)
     assert_difference('Applause.count') do
-      find(:xpath, "//button[@data-film-id='#{films(:one).id}' and @data-category='story']").click
+      find(:xpath, "//button[@data-film-id='#{film.id}' and @data-category='story']").click
+      sleep 0.5
     end
 
-    applause = films(:one).applauses.last
+    applause = film.applauses.last
     assert_equal(user, applause.user)
     assert_equal('story', applause.category)
   end
@@ -43,10 +45,12 @@ class ApplausesTest < ApplicationSystemTestCase
 
     assert_difference('Applause.count') do
       find(:xpath, "//button[@data-film-id='#{films(:one).id}' and @data-category='story']").click
+      sleep 0.5
     end
 
     assert_difference('Applause.count', -1) do
       find(:xpath, "//button[@data-film-id='#{films(:one).id}' and @data-category='story']").click
+      sleep 0.5
     end
   end
 
