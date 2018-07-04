@@ -19,7 +19,7 @@ function postApplause(filmId, category, button) {
                      button.attr('data-category-id', response.applause.id);
                      button.attr('data-method', 'DELETE');
 
-                     updateTotal(response.film.id, response.film.total);
+                     updateTotal(response.film.id, response.applause.total);
                    }
           }
   )
@@ -33,6 +33,8 @@ function deleteApplause(filmId, applauseId, button) {
                      button.text('+');
                      button.attr('data-method', 'POST');
                      button.removeAttr('data-category-id');
+
+                     updateTotal(response.film.id, response.applause.total)
                    }
          }
   )

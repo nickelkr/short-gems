@@ -6,10 +6,10 @@ class ApplausesController < ApplicationController
     applause = film.applauses.create(user: current_user, category: params[:category])
 
     render json: { applause: 
-                   { id: applause.id },
-                  film:
-                   { id: film.id,
-                     total: film.applauses.count }
+                     { id: applause.id,
+                       total: film.applauses.count},
+                   film:
+                     { id: film.id }
                  }
   end
 
@@ -19,6 +19,14 @@ class ApplausesController < ApplicationController
                 .where(id: params[:id])
                 .first
 
+    film = applause.film
+
     applause.destroy if applause
+
+    render json: { applause:
+                     { total: film.applauses.count},
+                   film:
+                     { id: film.id}
+                 }
   end
 end
