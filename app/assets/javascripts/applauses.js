@@ -18,6 +18,9 @@ function postApplause(filmId, category, button) {
                      button.text('-');
                      button.attr('data-category-id', response.applause.id);
                      button.attr('data-method', 'DELETE');
+
+                     console.log(response.film.id)
+                     $('strong[data-film-id="' + response.film.id + '"][data-type="total"]')[0].innerHTML = ('+ ' + response.film.total)
                    }
           }
   )

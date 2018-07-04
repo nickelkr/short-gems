@@ -55,6 +55,21 @@ class ApplausesTest < ApplicationSystemTestCase
   end
 
   test 'total count' do
+    user = users(:kyle)
+
+    visit new_user_session_path
+    fill_in 'user_email', with: user.email
+    fill_in 'user_password', with: KYLE_PASS
+    click_on 'Log in'
+
+    film = films(:one)
+
+    find(:xpath, "//button[@data-film-id='#{film.id}' and @data-category='acting']").click
+    sleep 0.5
+
+    total = find(:xpath, "//strong[@data-film-id='#{film.id}' and @data-type='total']")
+
+    assert_equal("+ #{film.applauses.count}", total.text)
   end
 
   test 'require user to be logged in' do
