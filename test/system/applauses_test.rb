@@ -60,8 +60,8 @@ class ApplausesTest < ApplicationSystemTestCase
   test 'require user to be logged in' do
     visit films_path
 
-    find(:xpath, "//button[@data-film-id='#{films(:one).id}' and @data-category='sound']").click
+    first(:button, '+').click
 
-    assert_redirected_to new_user_session_path
+    assert_current_path('/users/sign_in')
   end
 end
