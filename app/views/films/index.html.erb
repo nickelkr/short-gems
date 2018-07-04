@@ -19,25 +19,7 @@
           </iframe>
         </div>
         <div class="col-4">
-          <% Hash[Applause.categories.map { |k,_| [k,nil]}].merge(film.applauses.where(user: current_user).group_by(&:category)).each do |category, applause| %>
-            <div class="row with-padding">
-              <div class="col-2">
-                <% if applause.present? %>
-                  <button class="btn btn-primary btn-round"
-                    data-film-id="<%= film.id %>"
-                    data-category="<%= category %>"
-                    data-category-id="<%= applause.first.id %>"
-                    data-method="DELETE"><%= "\u2013" %></button>
-                <% else %>
-                  <button class="btn btn-outline-primary btn-round"
-                    data-film-id="<%= film.id %>"
-                    data-category="<%= category %>"
-                      data-method="POST">+</button>
-                <% end %>
-              </div>
-              <div class="col-10 category-vote-label"><%= category.upcase %></div>
-            </div>
-          <% end %>
+          <%= render partial: 'applauses/applause_buttons', locals: { film: film } %>
         </div>
       </div>
       <% if current_user && (film.user_id == current_user.id || current_user.roles.admin?) %>
