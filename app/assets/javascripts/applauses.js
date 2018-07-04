@@ -15,7 +15,7 @@ function postApplause(filmId, category, button) {
             category: category
           },
           success: function(response) {
-                     button.text('-');
+                     button.text('\u2013');
                      button.attr('data-category-id', response.applause.id);
                      button.attr('data-method', 'DELETE');
                      button.attr('class', 'btn btn-primary btn-round')
