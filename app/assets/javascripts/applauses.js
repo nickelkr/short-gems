@@ -19,8 +19,7 @@ function postApplause(filmId, category, button) {
                      button.attr('data-category-id', response.applause.id);
                      button.attr('data-method', 'DELETE');
 
-                     console.log(response.film.id)
-                     $('strong[data-film-id="' + response.film.id + '"][data-type="total"]')[0].innerHTML = ('+ ' + response.film.total)
+                     updateTotal(response.film.id, response.film.total);
                    }
           }
   )
@@ -38,3 +37,9 @@ function deleteApplause(filmId, applauseId, button) {
          }
   )
 }
+
+function updateTotal(filmId, count) {
+  total = $('strong[data-film-id="' + filmId + '"][data-type="total"]')[0]
+  total.innerHTML = ('+ ' + count)
+}
+
