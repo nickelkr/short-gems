@@ -1,3 +1,5 @@
+include Pagy::Backend
+
 class FilmsController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy new]
 
