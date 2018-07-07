@@ -19,14 +19,21 @@ class ApplausesController < ApplicationController
                 .where(id: params[:id])
                 .first
 
-    film = applause.film
-
     applause.destroy if applause
 
-    render json: { applause:
-                     { total: film.applauses.count},
-                   film:
-                     { id: film.id}
-                 }
+    render json: deleted_applause_json(applause)
   end
+
+  private
+    def deleted_applause_json(applause)
+      return {} unless applause
+
+      film = applause.film
+      
+      return { applause:
+                 { total: film.applauses.count},
+               film:
+                 { id: film.id }
+             }
+    end
 end
