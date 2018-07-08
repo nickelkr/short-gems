@@ -18,3 +18,8 @@ admin:
   email: admin@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, '1234567890') %>
   confirmed_at: <%= Time.now %>
+
+jake:
+  email: jake@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, '1234567890') %>
+  confirmed_at: <5= Time.now %>

@@ -1,3 +1,5 @@
+include Pagy::Backend
+
 class FilmsController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy new]
 
@@ -18,7 +20,7 @@ class FilmsController < ApplicationController
   end
 
   def index
-    @films = Film.all.order(created_at: :desc)
+    @pagy, @films = pagy(Film.all.order(created_at: :desc), items: 25)
   end
 
   def destroy

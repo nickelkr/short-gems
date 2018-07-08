@@ -36,6 +36,11 @@
   <br />
   <br />
 <% end %>
+
+<div class="pagination">
+  <%== pagy_nav_bootstrap(@pagy) %>
+</div>
+
 <script>
   $('button').click(function() {
     applauseClick($(this));
