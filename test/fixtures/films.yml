@@ -10,3 +10,11 @@ two:
   external_id: 'otxlzSMcBTo'
   title: 'The Big Shave'
   runtime: john
+
+<% 1.upto(30) do |i| %>
+film_<%= i %>:
+  external_id: <%= i %>
+  title: 'film #{i}'
+  runtime: 12
+  user: jake
+<% end %>

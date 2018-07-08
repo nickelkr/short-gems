@@ -52,4 +52,23 @@ class FilmsTest < ApplicationSystemTestCase
       click_link("remove-#{films(:one).id}")
     end
   end
+
+# These tests take way to long to run so for now we cannot use them
+#  JAKE_PASS = '1234567890'
+#  test 'pagination' do
+#    @user = users(:jake)
+#
+#    visit new_user_session_path
+#
+#    fill_in 'user_email', with: @user.email
+#    fill_in 'user_password', with: JAKE_PASS
+#    click_on 'Log in'
+#
+#    visit films_path
+#
+#    assert_difference('Pagy::VARS[:page]') do
+#      byebug
+#      click_on '2'
+#    end  
+#  end
 end
