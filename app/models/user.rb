@@ -7,4 +7,5 @@ class User < ApplicationRecord
 
   has_many :films
   has_many :roles
+  has_many :applauses
 end

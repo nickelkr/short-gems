@@ -1,25 +1,48 @@
 <% @films.each do |film| %>
   <div class="row">
-    <div class="card mx-auto">
-      <div class="card-body">
-        <h5 class="card-title"><%= film.title %></h5>
-        <h6 class="card-subtitle mb-2 text-muted"><%= film.runtime %> minutes</h6>
-        <iframe width="560"
-          height="315"
-          frameborder="0"
-          allow="autoplay; encrypted-media"
-          allowfullscreen
-          src="https://www.youtube.com/embed/<%= film.external_id %>">
-        </iframe>
-        <% if current_user && (film.user_id == current_user.id || current_user.roles.admin?) %>
-          <br />
-          <%= link_to 'Remove film', film_path(film.id), { method: :delete, id: "remove-#{film.id}" } %>
-        <% end %>
+    <div class="col-12">
+      <h2 style="font-family: Oswald;"><%= film.title %></h5>
+      <h6 class="text-muted" style="font-family: Open Sans;"><%= film.runtime %> minutes</h6>
+      <div class="row">
+        <div class="col-1">
+          <div style="padding-top: 20px;">
+            <strong data-film-id="<%= film.id %>" data-type="total">+ <%= film.applauses.count %></strong>
+          </div>
+        </div>
+        <div class="col-7">
+          <iframe width="560"
+            height="315"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+            src="https://www.youtube.com/embed/<%= film.external_id %>">
+          </iframe>
+        </div>
+        <div class="col-4">
+          <% if user_signed_in? %>
+            <%= render partial: 'applauses/applause_buttons', locals: { film: film } %>
+          <% else %>
+            <%= render partial: 'applauses/sign_in_redirect_buttons' %>
+          <% end %>
+        </div>
       </div>
+      <% if current_user && (film.user_id == current_user.id || current_user.roles.admin?) %>
+        <br />
+        <%= link_to 'Remove film', film_path(film.id), { method: :delete, id: "remove-#{film.id}" } %>
+      <% end %>
     </div>
   </div>
   <br />
+  <br />
+  <br />
 <% end %>
+
 <div class="pagination">
   <%== pagy_nav_bootstrap(@pagy) %>
 </div>
+
+<script>
+  $('button').click(function() {
+    applauseClick($(this));
+  })
+</script>
