@@ -1,6 +1,10 @@
 require 'application_system_test_case'
 
 class ApplausesTest < ApplicationSystemTestCase
+  def button_by_film_category(film_id, category)
+    find(:xpath,"//button[@data-film-id='#{film_id}' and @data-category='#{category}']")
+  end
+
   KYLE_PASS = '12345678'
   test 'adding a applause' do
     visit new_user_session_path
@@ -8,7 +12,7 @@ class ApplausesTest < ApplicationSystemTestCase
     film = films(:one)
 
     assert_difference('Applause.count') do
-      find(:xpath, "//button[@data-film-id='#{film.id}' and @data-category='story']").click
+      button_by_film_category(film.id, 'story').click
       sleep 0.5
     end
 
@@ -32,12 +36,12 @@ class ApplausesTest < ApplicationSystemTestCase
     sign_in_from_view(:kyle, KYLE_PASS)
 
     assert_difference('Applause.count') do
-      find(:xpath, "//button[@data-film-id='#{films(:one).id}' and @data-category='story']").click
+      button_by_film_category(films(:one).id, 'story').click
       sleep 0.5
     end
 
     assert_difference('Applause.count', -1) do
-      find(:xpath, "//button[@data-film-id='#{films(:one).id}' and @data-category='story']").click
+      button_by_film_category(films(:one).id, 'story').click
       sleep 0.5
     end
   end
@@ -48,7 +52,7 @@ class ApplausesTest < ApplicationSystemTestCase
 
     film = films(:one)
 
-    find(:xpath, "//button[@data-film-id='#{film.id}' and @data-category='acting']").click
+    button_by_film_category(film.id, 'acting').click
     sleep 0.5
 
     total = find(:xpath, "//strong[@data-film-id='#{film.id}' and @data-type='total']")
