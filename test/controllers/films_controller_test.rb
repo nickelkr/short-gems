@@ -14,8 +14,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
       }
 
     test 'should not create a film with a unexpected source' do
-      @user = users(:kyle)
-      sign_in(@user)
+      sign_in_as(:kyle)
 
       assert_no_difference('Film.count') do
         post films_url,
@@ -34,8 +33,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'should be able to use alternate YouTube link' do
-      @user = users(:kyle)
-      sign_in(@user)
+      sign_in_as(:kyle)
 
       assert_difference('Film.count') do
         post films_url,
@@ -63,8 +61,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should get create" do
-      @user = users(:kyle)
-      sign_in(@user) 
+      sign_in_as(:kyle)
 
       assert_difference('Film.count') do
         post films_url, params: params
@@ -79,8 +76,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy film" do
-    @user = users(:kyle)
-    sign_in(@user)
+    sign_in_as(:kyle)
 
     film = films(:one)
     assert_difference('Film.count', -1) do
@@ -92,8 +88,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fail to destroy due to permissions" do
-    @user = users(:kyle)
-    sign_in(@user)
+    sign_in_as(:kyle)
 
     film = films(:two)
     assert_no_difference('Film.count') do
@@ -105,8 +100,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'admin should be able to destroy any film' do
-    @user = users(:admin)
-    sign_in(@user)
+    sign_in_as(:kyle)
 
     film = films(:one)
     assert_difference('Film.count', -1) do
@@ -118,8 +112,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should fail due to film not found' do
-    @user = users(:kyle)
-    sign_in(@user)
+    sign_in_as(:kyle)
 
     assert_no_difference('Film.count') do
       delete film_url(999999999999)
@@ -130,8 +123,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Runtime numericality failure passed through flash' do
-    @user = users(:kyle)
-    sign_in(@user)
+    sign_in_as(:kyle)
 
     long_runtime = {
       film:
