@@ -1,14 +1,11 @@
 require 'application_system_test_case'
+require 'test_helper'
 
 class FilmsTest < ApplicationSystemTestCase
+  KYLE_PASS = '12345678'
   test 'creating a film' do
-    @user = users(:kyle)
-
     visit new_film_path
-
-    fill_in 'user_email', with: @user.email
-    fill_in 'user_password', with: KYLE_PASS
-    click_on 'Log in'
+    sign_in_from_view(:kyle, KYLE_PASS)
 
     fill_in 'film_title', with: 'Hotel Chevalier'
     fill_in 'film_runtime', with: 12
@@ -19,15 +16,9 @@ class FilmsTest < ApplicationSystemTestCase
     end
   end
 
-  KYLE_PASS = '12345678'
   test 'deleting a film' do
-    @user = users(:kyle)
-    
     visit new_user_session_path
-
-    fill_in 'user_email', with: @user.email
-    fill_in 'user_password', with: KYLE_PASS
-    click_on 'Log in'
+    sign_in_from_view(:kyle, KYLE_PASS) 
 
     visit films_path
 
@@ -38,13 +29,8 @@ class FilmsTest < ApplicationSystemTestCase
 
   ADMIN_PASS = '1234567890'
   test 'admin deleting a film' do
-    @user = users(:admin)
-
     visit new_user_session_path
-
-    fill_in 'user_email', with: @user.email
-    fill_in 'user_password', with: ADMIN_PASS
-    click_on 'Log in'
+    sign_in_from_view(:admin, ADMIN_PASS)
 
     visit films_path
 
