@@ -67,8 +67,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
       sign_in(@user) 
 
       assert_difference('Film.count') do
-        post films_url, 
-             params: params
+        post films_url, params: params
       end
 
       assert_redirected_to(films_path)
@@ -134,8 +133,17 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:kyle)
     sign_in(@user)
 
+    long_runtime = {
+      film:
+      {
+        title: 'Hello',
+        runtime: 60,
+        external_id: 'https://youtu.be/hello'
+      }
+    }
+
     assert_no_difference('Film.count') do
-      post films_url, params: params.merge(runtime: 60)
+      post films_url, params: long_runtime
     end
 
     assert_redirected_to(films_path)

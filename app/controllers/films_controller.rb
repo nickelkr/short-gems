@@ -6,11 +6,14 @@ class FilmsController < ApplicationController
   def create
     link = film_params[:external_id]
 
-    if external_id = ExternalIDExtractor.new(link).perform
+    external_id = ExternalIDExtractor.new(link).perform
+    film = current_user.films.build(film_params.merge({external_id: external_id})) if external_id
+
+    if film.save
       current_user.films.create(film_params.merge({external_id: external_id}))
       flash[:success] = 'Film added'
     else
-      flash[:error] = 'Only YouTube videos are currently supported.'
+      flash[:error] = film.errors.full_messages.first
     end
 
   rescue StandardError => e
