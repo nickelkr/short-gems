@@ -1,8 +1,19 @@
 require 'application_system_test_case'
 
 class ApplausesTest < ApplicationSystemTestCase
-  def button_by_film_category(film_id, category)
-    find(:xpath,"//button[@data-film-id='#{film_id}' and @data-category='#{category}']")
+  def button_with_attr_values(attr_mapping)
+    xpath = attr_mapping.reduce('') do |xpath_memo, (attr, value)|
+      if xpath_memo.empty?
+        xpath_memo += '//button['
+      else
+        xpath_memo += ' and '
+      end
+
+      xpath_memo + " @data-#{attr.to_s.tr('_', '-')}='#{value}'"
+    end
+    xpath += ']'
+
+    find(:xpath, xpath)
   end
 
   KYLE_PASS = '12345678'
@@ -12,7 +23,7 @@ class ApplausesTest < ApplicationSystemTestCase
     film = films(:one)
 
     assert_difference('Applause.count') do
-      button_by_film_category(film.id, 'story').click
+      button_with_attr_values(film_id: film.id, category: 'story').click
       sleep 0.5
     end
 
@@ -25,10 +36,10 @@ class ApplausesTest < ApplicationSystemTestCase
     visit new_user_session_path
     sign_in_from_view(:kyle, KYLE_PASS)
 
-    assert find(:xpath, "//button[@data-film-id='#{films(:one).id}'" +
-                        "and @data-category='directing'" + 
-                        "and @data-method='DELETE'" + 
-                        "and @data-category-id='#{applauses(:directing).id}']")
+    assert (button_with_attr_values(film_id: films(:one).id,
+                                    category: 'directing',
+                                    method: 'DELETE',
+                                    category_id: applauses(:directing).id))
   end
 
   test 'removing a applause' do
@@ -36,12 +47,12 @@ class ApplausesTest < ApplicationSystemTestCase
     sign_in_from_view(:kyle, KYLE_PASS)
 
     assert_difference('Applause.count') do
-      button_by_film_category(films(:one).id, 'story').click
+      button_with_attr_values(film_id: films(:one).id, category: 'story').click
       sleep 0.5
     end
 
     assert_difference('Applause.count', -1) do
-      button_by_film_category(films(:one).id, 'story').click
+      button_with_attr_values(film_id: films(:one).id, category: 'story').click
       sleep 0.5
     end
   end
@@ -52,7 +63,7 @@ class ApplausesTest < ApplicationSystemTestCase
 
     film = films(:one)
 
-    button_by_film_category(film.id, 'acting').click
+    button_with_attr_values(film_id: film.id, category: 'acting').click
     sleep 0.5
 
     total = find(:xpath, "//strong[@data-film-id='#{film.id}' and @data-type='total']")
