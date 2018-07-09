@@ -3,14 +3,10 @@ require 'application_system_test_case'
 class ApplausesTest < ApplicationSystemTestCase
   KYLE_PASS = '12345678'
   test 'adding a applause' do
-    user = users(:kyle)
-
     visit new_user_session_path
-    fill_in 'user_email', with: user.email
-    fill_in 'user_password', with: KYLE_PASS
-    click_on 'Log in'
-
+    user = sign_in_from_view(:kyle, KYLE_PASS)
     film = films(:one)
+
     assert_difference('Applause.count') do
       find(:xpath, "//button[@data-film-id='#{film.id}' and @data-category='story']").click
       sleep 0.5
@@ -22,12 +18,8 @@ class ApplausesTest < ApplicationSystemTestCase
   end
 
   test 'existing applause renders' do
-    user = users(:kyle)
-
     visit new_user_session_path
-    fill_in 'user_email', with: user.email
-    fill_in 'user_password', with: KYLE_PASS
-    click_on 'Log in'
+    sign_in_from_view(:kyle, KYLE_PASS)
 
     assert find(:xpath, "//button[@data-film-id='#{films(:one).id}'" +
                         "and @data-category='directing'" + 
@@ -36,12 +28,8 @@ class ApplausesTest < ApplicationSystemTestCase
   end
 
   test 'removing a applause' do
-    user = users(:kyle)
-
     visit new_user_session_path
-    fill_in 'user_email', with: user.email
-    fill_in 'user_password', with: KYLE_PASS
-    click_on 'Log in'
+    sign_in_from_view(:kyle, KYLE_PASS)
 
     assert_difference('Applause.count') do
       find(:xpath, "//button[@data-film-id='#{films(:one).id}' and @data-category='story']").click
@@ -55,12 +43,8 @@ class ApplausesTest < ApplicationSystemTestCase
   end
 
   test 'total count' do
-    user = users(:kyle)
-
     visit new_user_session_path
-    fill_in 'user_email', with: user.email
-    fill_in 'user_password', with: KYLE_PASS
-    click_on 'Log in'
+    sign_in_from_view(:kyle, KYLE_PASS)
 
     film = films(:one)
 
