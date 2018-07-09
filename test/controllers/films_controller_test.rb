@@ -3,29 +3,22 @@ require 'test_helper'
 class FilmsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
-    params =
+    def params(opts={})
       {
-        film: 
-        { 
-          title: 'Hotel Chevalier', 
-          runtime: 13, 
-          external_id: 'https://youtu.be/yellowfin' 
-        }
+        film:
+        {
+          title: 'Hotel Cevalier',
+          runtime: 13,
+          external_id: 'https://youtu.be/stock-id1'
+        }.merge(opts)
       }
+    end
 
     test 'should not create a film with a unexpected source' do
       sign_in_as(:kyle)
 
       assert_no_difference('Film.count') do
-        post films_url,
-          params: {
-            film:
-            { 
-              title: 'Something',
-              runtime: 1,
-              external_id: 'https://unsupported.com/a-npmDGK1Dc'
-            }
-        }
+        post films_url, params: params(external_id: 'https://unsupported.com/a-npmDGK1Dc')
       end
 
       assert_redirected_to(films_path)
@@ -36,15 +29,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
       sign_in_as(:kyle)
 
       assert_difference('Film.count') do
-        post films_url,
-          params: {
-            film:
-            {
-              title: 'Chicago',
-              runtime: 7,
-              external_id: 'https://www.youtube.com/watch?v=QSwvg9Rv2EI'
-            }
-        }
+        post films_url, params: params(external_id: 'https://www.youtube.com/watch?v=QSwvg9Rv2EI')
       end
 
       assert_redirected_to(films_path)
@@ -125,17 +110,8 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   test 'Runtime numericality failure passed through flash' do
     sign_in_as(:kyle)
 
-    long_runtime = {
-      film:
-      {
-        title: 'Hello',
-        runtime: 60,
-        external_id: 'https://youtu.be/hello'
-      }
-    }
-
     assert_no_difference('Film.count') do
-      post films_url, params: long_runtime
+      post films_url, params: params(runtime: 60)
     end
 
     assert_redirected_to(films_path)
