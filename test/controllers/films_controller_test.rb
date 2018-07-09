@@ -129,4 +129,16 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to(films_path)
     assert_equal('Film not found', flash[:error])
   end
+
+  test 'Runtime numericality failure passed through flash' do
+    @user = users(:kyle)
+    sign_in(@user)
+
+    assert_no_difference('Film.count') do
+      post films_url, params: params.merge(runtime: 60)
+    end
+
+    assert_redirected_to(films_path)
+    assert_equal('Runtime can only be whole numbers between 0 and 50 minutes.', flash[:error])
+  end
 end
