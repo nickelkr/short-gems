@@ -10,5 +10,6 @@ class ActiveSupport::TestCase
   def sign_in_as(user)
     user = users(user)
     sign_in(user)
+    user
   end
 end
