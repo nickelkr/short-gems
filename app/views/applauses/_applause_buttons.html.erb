@@ -1,4 +1,12 @@
-<button class="btn btn-primary vote-collapse-button" type="button" data-toggle="collapse" data-target="#voting" aria-expanded="false" aria-controls="voting">Vote</button>
+<button class="btn btn-outline-primary vote-collapse-button col-12"
+  type="button"
+  data-toggle="collapse"
+  data-target="#voting"
+  aria-expanded="false"
+  aria-controls="voting">
+  <strong>Vote</strong>
+</button>
+
 <div class="collapse vote-collapse" id="voting">
   <% Hash[Applause.categories.map { |k,_| [k,nil]}].merge(film.applauses.where(user: current_user).group_by(&:category)).each do |category, applause| %>
     <div class="row with-padding">
