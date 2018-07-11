@@ -1,8 +1,11 @@
-<% Applause.categories.each do |category| %>
-  <div class="row with-padding">
-    <div class="col-2">
-      <%= button_to '+', new_user_session_path, method: :get, class: 'btn btn-outline-primary btn-round' %>
+<%= button_to 'Vote', new_user_session_path, method: :get, class: 'btn btn-primary vote-collapse-button' %>
+<div class="collapse vote-collapse">
+  <% Applause.categories.each do |category| %>
+    <div class="row with-padding">
+      <div class="col-2">
+        <%= button_to '+', new_user_session_path, method: :get, class: 'btn btn-outline-primary btn-round' %>
+      </div>
+      <div class="col-10 category-vote-label"><%= category.first.upcase %></div>
     </div>
-    <div class="col-10 category-vote-label"><%= category.first.upcase %></div>
-  </div>
-<% end %>
+  <% end %>
+</div>
