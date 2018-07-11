@@ -1,4 +1,8 @@
-<%= button_to 'Vote', new_user_session_path, method: :get, class: 'btn btn-primary vote-collapse-button' %>
+<%= button_to 'Vote',
+  new_user_session_path,
+  method: :get,
+  class: 'btn btn-outline-primary vote-collapse-button col-12' %>
+
 <div class="collapse vote-collapse">
   <% Applause.categories.each do |category| %>
     <div class="row with-padding">
