@@ -2,6 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@media (min-width: 768px) {
+  .vote-collapse {
+    display: block !important;
+    height: auto !important;
+    visibility: visibile;
+  }
+
+  .vote-collapse-button {
+    display: none !important;
+  }
+}
+
 .category-vote-label {
   line-height: 2.4em;
   padding-left: 0px;
