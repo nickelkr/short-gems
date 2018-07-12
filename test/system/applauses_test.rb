@@ -1,18 +1,29 @@
 require 'application_system_test_case'
 
 class ApplausesTest < ApplicationSystemTestCase
+  def button_with_attr_values(attr_mapping)
+    xpath = attr_mapping.reduce('') do |xpath_memo, (attr, value)|
+      if xpath_memo.empty?
+        xpath_memo += '//button['
+      else
+        xpath_memo += ' and '
+      end
+
+      xpath_memo + " @data-#{attr.to_s.tr('_', '-')}='#{value}'"
+    end
+    xpath += ']'
+
+    find(:xpath, xpath)
+  end
+
   KYLE_PASS = '12345678'
   test 'adding a applause' do
-    user = users(:kyle)
-
     visit new_user_session_path
-    fill_in 'user_email', with: user.email
-    fill_in 'user_password', with: KYLE_PASS
-    click_on 'Log in'
-
+    user = sign_in_from_view(:kyle, KYLE_PASS)
     film = films(:one)
+
     assert_difference('Applause.count') do
-      find(:xpath, "//button[@data-film-id='#{film.id}' and @data-category='story']").click
+      button_with_attr_values(film_id: film.id, category: 'story').click
       sleep 0.5
     end
 
@@ -22,49 +33,37 @@ class ApplausesTest < ApplicationSystemTestCase
   end
 
   test 'existing applause renders' do
-    user = users(:kyle)
-
     visit new_user_session_path
-    fill_in 'user_email', with: user.email
-    fill_in 'user_password', with: KYLE_PASS
-    click_on 'Log in'
+    sign_in_from_view(:kyle, KYLE_PASS)
 
-    assert find(:xpath, "//button[@data-film-id='#{films(:one).id}'" +
-                        "and @data-category='directing'" + 
-                        "and @data-method='DELETE'" + 
-                        "and @data-category-id='#{applauses(:directing).id}']")
+    assert (button_with_attr_values(film_id: films(:one).id,
+                                    category: 'directing',
+                                    method: 'DELETE',
+                                    category_id: applauses(:directing).id))
   end
 
   test 'removing a applause' do
-    user = users(:kyle)
-
     visit new_user_session_path
-    fill_in 'user_email', with: user.email
-    fill_in 'user_password', with: KYLE_PASS
-    click_on 'Log in'
+    sign_in_from_view(:kyle, KYLE_PASS)
 
     assert_difference('Applause.count') do
-      find(:xpath, "//button[@data-film-id='#{films(:one).id}' and @data-category='story']").click
+      button_with_attr_values(film_id: films(:one).id, category: 'story').click
       sleep 0.5
     end
 
     assert_difference('Applause.count', -1) do
-      find(:xpath, "//button[@data-film-id='#{films(:one).id}' and @data-category='story']").click
+      button_with_attr_values(film_id: films(:one).id, category: 'story').click
       sleep 0.5
     end
   end
 
   test 'total count' do
-    user = users(:kyle)
-
     visit new_user_session_path
-    fill_in 'user_email', with: user.email
-    fill_in 'user_password', with: KYLE_PASS
-    click_on 'Log in'
+    sign_in_from_view(:kyle, KYLE_PASS)
 
     film = films(:one)
 
-    find(:xpath, "//button[@data-film-id='#{film.id}' and @data-category='acting']").click
+    button_with_attr_values(film_id: film.id, category: 'acting').click
     sleep 0.5
 
     total = find(:xpath, "//strong[@data-film-id='#{film.id}' and @data-type='total']")

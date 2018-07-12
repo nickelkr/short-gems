@@ -5,8 +5,7 @@ class ApplausesControllerTest < ActionDispatch::IntegrationTest
 
   test 'adds applause for film' do
     film = films(:one)
-    user = users(:john)
-    sign_in(user)
+    user = sign_in_as(:john)
 
     params = { film: film.id, category: 'directing' }
 
@@ -21,8 +20,7 @@ class ApplausesControllerTest < ActionDispatch::IntegrationTest
   
   test 'destroys applause' do
     film = films(:one)
-    user = users(:john)
-    sign_in(user)
+    user = sign_in_as(:john)
 
     applause = Applause.create(film: film, user: user, category: 'story')
 
@@ -33,8 +31,7 @@ class ApplausesControllerTest < ActionDispatch::IntegrationTest
 
   test 'fails on duplicate' do
     film = films(:one)
-    user = users(:john)
-    sign_in(user)
+    user = sign_in_as(:john)
 
     params = { film: film.id, user: user.id, category: 'sound' }
     Applause.create(film: film, user: user, category: 'sound')
@@ -46,9 +43,8 @@ class ApplausesControllerTest < ActionDispatch::IntegrationTest
 
   test 'user can not delete another users' do
     film = films(:one)
-    user1 = users(:kyle)
+    sign_in_as(:kyle)
     user2 = users(:john)
-    sign_in(user1)
 
     applause = Applause.create(film: film, user: user2, category: 'acting')
 
@@ -67,8 +63,7 @@ class ApplausesControllerTest < ActionDispatch::IntegrationTest
 
   test 'trying to destroy missing record' do
     film = films(:one)
-    user = users(:kyle)
-    sign_in(user)
+    sign_in_as(:kyle)
 
     assert_no_difference('Applause.count') do
       delete film_applause_url(film.id, 999999999999999)
