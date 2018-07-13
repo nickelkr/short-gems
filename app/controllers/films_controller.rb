@@ -28,6 +28,11 @@ class FilmsController < ApplicationController
 
   def show
     @film = Film.find(params[:id])
+    byebug
+    if @film.nil?
+      flash[:error] = "Film not found"
+      redirect_to films_path
+    end
   end
 
   def destroy

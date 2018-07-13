@@ -149,4 +149,13 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to(films_path)
     assert_equal('Runtime can only be whole numbers between 0 and 50 minutes.', flash[:error])
   end
+
+  test 'show film should fail due to film not found' do
+    @user = users(:jake)
+    sign_in(@user)
+
+    show film_url(9999999999)
+    assert_equal('Film not found', flash[:error])
+    assert_redirect_to(films_path)
+  end
 end
