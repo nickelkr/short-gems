@@ -1,7 +1,7 @@
 <% @films.each do |film| %>
   <div class="row">
     <div class="col-12">
-      <h2 style="font-family: Oswald;"><%= film.title %></h5>
+      <h2 style="font-family: Oswald;"><%= link_to '#{film.title}', film_path(film) %></h5>
       <h6 class="text-muted" style="font-family: Open Sans;"><%= film.runtime %> minutes</h6>
       <div class="row">
         <div class="col-1">

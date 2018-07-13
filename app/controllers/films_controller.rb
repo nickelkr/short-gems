@@ -26,6 +26,10 @@ class FilmsController < ApplicationController
     @pagy, @films = pagy(Film.all.order(created_at: :desc), items: 25)
   end
 
+  def show
+    @film = Film.find(params[:id])
+  end
+
   def destroy
     film = Film.where(id: params[:id]).first
     
