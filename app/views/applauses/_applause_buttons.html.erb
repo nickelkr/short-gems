@@ -16,12 +16,12 @@
             data-film-id="<%= film.id %>"
             data-category="<%= category %>"
             data-category-id="<%= applause.first.id %>"
-            data-method="DELETE"><%= "\u2013" %></button>
+            data-method="DELETE"></strong><%= "\u2013" %></strong></button>
         <% else %>
           <button class="btn btn-outline-primary btn-round"
             data-film-id="<%= film.id %>"
             data-category="<%= category %>"
-            data-method="POST">+</button>
+            data-method="POST"><strong>+</strong></button>
         <% end %>
       </div>
       <div class="col-10 category-vote-label"><%= category.upcase %></div>
