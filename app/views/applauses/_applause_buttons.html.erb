@@ -1,19 +1,30 @@
-<% Hash[Applause.categories.map { |k,_| [k,nil]}].merge(film.applauses.where(user: current_user).group_by(&:category)).each do |category, applause| %>
-  <div class="row with-padding">
-    <div class="col-2">
-      <% if applause.present? %>
-        <button class="btn btn-primary btn-round"
-          data-film-id="<%= film.id %>"
-          data-category="<%= category %>"
-          data-category-id="<%= applause.first.id %>"
-          data-method="DELETE"><strong><%= "\u2013" %></strong></button>
-      <% else %>
-        <button class="btn btn-outline-primary btn-round"
-          data-film-id="<%= film.id %>"
-          data-category="<%= category %>"
-          data-method="POST"><strong>+</strong></button>
-      <% end %>
+<button class="btn btn-outline-primary vote-collapse-button col-12"
+  type="button"
+  data-toggle="collapse"
+  data-target="#voting-<%= film.id %>"
+  aria-expanded="false"
+  aria-controls="voting">
+  <strong>Vote</strong>
+</button>
+
+<div class="collapse vote-collapse" id="voting-<%= film.id %>">
+  <% Hash[Applause.categories.map { |k,_| [k,nil]}].merge(film.applauses.where(user: current_user).group_by(&:category)).each do |category, applause| %>
+    <div class="row with-padding">
+      <div class="col-2">
+        <% if applause.present? %>
+          <button class="btn btn-primary btn-round"
+            data-film-id="<%= film.id %>"
+            data-category="<%= category %>"
+            data-category-id="<%= applause.first.id %>"
+            data-method="DELETE"></strong><%= "\u2013" %></strong></button>
+        <% else %>
+          <button class="btn btn-outline-primary btn-round"
+            data-film-id="<%= film.id %>"
+            data-category="<%= category %>"
+            data-method="POST"><strong>+</strong></button>
+        <% end %>
+      </div>
+      <div class="col-10 category-vote-label"><%= category.upcase %></div>
     </div>
-    <div class="col-10 category-vote-label"><%= category.upcase %></div>
-  </div>
-<% end %>
+  <% end %>
+</div>
