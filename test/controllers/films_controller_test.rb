@@ -3,30 +3,22 @@ require 'test_helper'
 class FilmsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
-    params =
+    def params(opts={})
       {
-        film: 
-        { 
-          title: 'Hotel Chevalier', 
-          runtime: 13, 
-          external_id: 'https://youtu.be/yellowfin' 
-        }
+        film:
+        {
+          title: 'Hotel Cevalier',
+          runtime: 13,
+          external_id: 'https://youtu.be/stock-id1'
+        }.merge(opts)
       }
+    end
 
     test 'should not create a film with a unexpected source' do
-      @user = users(:kyle)
-      sign_in(@user)
+      sign_in_as(:kyle)
 
       assert_no_difference('Film.count') do
-        post films_url,
-          params: {
-            film:
-            { 
-              title: 'Something',
-              runtime: 1,
-              external_id: 'https://unsupported.com/a-npmDGK1Dc'
-            }
-        }
+        post films_url, params: params(external_id: 'https://unsupported.com/a-npmDGK1Dc')
       end
 
       assert_redirected_to(films_path)
@@ -34,19 +26,10 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test 'should be able to use alternate YouTube link' do
-      @user = users(:kyle)
-      sign_in(@user)
+      sign_in_as(:kyle)
 
       assert_difference('Film.count') do
-        post films_url,
-          params: {
-            film:
-            {
-              title: 'Chicago',
-              runtime: 7,
-              external_id: 'https://www.youtube.com/watch?v=QSwvg9Rv2EI'
-            }
-        }
+        post films_url, params: params(external_id: 'https://www.youtube.com/watch?v=QSwvg9Rv2EI')
       end
 
       assert_redirected_to(films_path)
@@ -63,8 +46,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "should get create" do
-      @user = users(:kyle)
-      sign_in(@user) 
+      sign_in_as(:kyle)
 
       assert_difference('Film.count') do
         post films_url, params: params
@@ -79,8 +61,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy film" do
-    @user = users(:kyle)
-    sign_in(@user)
+    sign_in_as(:kyle)
 
     film = films(:one)
     assert_difference('Film.count', -1) do
@@ -92,8 +73,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fail to destroy due to permissions" do
-    @user = users(:kyle)
-    sign_in(@user)
+    sign_in_as(:kyle)
 
     film = films(:two)
     assert_no_difference('Film.count') do
@@ -105,8 +85,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'admin should be able to destroy any film' do
-    @user = users(:admin)
-    sign_in(@user)
+    sign_in_as(:kyle)
 
     film = films(:one)
     assert_difference('Film.count', -1) do
@@ -118,8 +97,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should fail due to film not found' do
-    @user = users(:kyle)
-    sign_in(@user)
+    sign_in_as(:kyle)
 
     assert_no_difference('Film.count') do
       delete film_url(999999999999)
@@ -130,20 +108,10 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Runtime numericality failure passed through flash' do
-    @user = users(:kyle)
-    sign_in(@user)
-
-    long_runtime = {
-      film:
-      {
-        title: 'Hello',
-        runtime: 60,
-        external_id: 'https://youtu.be/hello'
-      }
-    }
+    sign_in_as(:kyle)
 
     assert_no_difference('Film.count') do
-      post films_url, params: long_runtime
+      post films_url, params: params(runtime: 60)
     end
 
     assert_redirected_to(films_path)

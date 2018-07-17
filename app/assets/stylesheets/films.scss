@@ -1,3 +1,35 @@
 // Place all the styles related to the Films controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@media (max-width: 767px) {
+  .vote-total-wrapper {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
+
+@media (min-width: 768px) {
+  .vote-total-wrapper {
+    padding-top: 20px;
+  }
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-col {
+  padding-bottom: 20px;
+}
