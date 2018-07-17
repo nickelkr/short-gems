@@ -27,9 +27,9 @@ class FilmsController < ApplicationController
   end
 
   def show
-    @film = Film.find(params[:id])
-    byebug
-    if @film.nil?
+    @film = Film.find_by_id(params[:id])
+
+    unless @film.present?
       flash[:error] = "Film not found"
       redirect_to films_path
     end
