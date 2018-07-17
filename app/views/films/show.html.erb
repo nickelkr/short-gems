@@ -2,26 +2,29 @@
   <div class="col-12">
     <h2 style="font-family: Oswald;"><%= @film.title %></h5>
     <h6 class="texted-muted" style="font-family: Open Sans;"><%= @film.runtime %> minutes</h6>
-    <div class="col-1">
-      <div style="padding-top: 20px;">
-        <strong data-film-id="<%= @film.id %>" data-type="total">+ <%= @film.applauses.count %></strong>
-      </div> 
-    </div>
-    <div class="col-7">
-      <iframe width="560"
-        height="315"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        allowfullscreen
-        src="https://www.youtube.com/embed/<%= @film.external_id %>">
-      </iframe>
-    </div>
-    <div class="col-4">
-      <% if user_signed_in? %>
-        <%= render partial: 'applauses/applause_buttons', locals: { film: @film } %>
-      <% else %>
-        <%= render partial: 'applauses/sign_in_redirect_buttons' %>
-      <% end %>
+    <div class="row">
+      <div class="col-sm-12 col-md-1">
+        <div class="vote-total-wrapper">
+          <strong data-film-id="<%= @film.id %>" data-type="total">+ <%= @film.applauses.count %></strong>
+        </div> 
+      </div>
+      <div class="video-col col-sm-12 col-md-7">
+        <div class="video-container">
+          <iframe
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+            src="https://www.youtube.com/embed/<%= @film.external_id %>">
+          </iframe>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <% if user_signed_in? %>
+          <%= render partial: 'applauses/applause_buttons', locals: { film: @film } %>
+        <% else %>
+          <%= render partial: 'applauses/sign_in_redirect_buttons' %>
+        <% end %>
+      </div>
     </div>
     <% if current_user && (@film.user_id == current_user.id || current_user.roles.admin?) %>
       <br />
