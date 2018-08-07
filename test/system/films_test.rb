@@ -39,6 +39,21 @@ class FilmsTest < ApplicationSystemTestCase
     end
   end
 
+  JAKE_PASS = '1234567890'
+  test 'film show page' do
+    @user = users(:jake)
+
+    visit new_user_session_path
+
+    fill_in 'user_email', with: @user.email
+    fill_in 'user_password', with: JAKE_PASS
+    click_on 'Log in'
+    
+    visit film_url(films(:one).id)
+
+    assert_text 'Hotel Chevalier'
+  end
+
 # These tests take way to long to run so for now we cannot use them
 #  JAKE_PASS = '1234567890'
 #  test 'pagination' do

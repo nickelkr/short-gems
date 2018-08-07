@@ -26,6 +26,15 @@ class FilmsController < ApplicationController
     @pagy, @films = pagy(Film.all.order(created_at: :desc), items: 25)
   end
 
+  def show
+    @film = Film.find_by_id(params[:id])
+
+    unless @film.present?
+      flash[:error] = "Film not found"
+      redirect_to films_path
+    end
+  end
+
   def destroy
     film = Film.where(id: params[:id]).first
     
