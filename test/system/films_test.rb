@@ -49,9 +49,9 @@ class FilmsTest < ApplicationSystemTestCase
     fill_in 'user_password', with: JAKE_PASS
     click_on 'Log in'
     
-    visit film_url(1)
+    visit film_url(films(:one).id)
 
-    assert_redirected_to(films_show_path)
+    assert_text 'Hotel Chevalier'
   end
 
 # These tests take way to long to run so for now we cannot use them
