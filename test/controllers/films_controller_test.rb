@@ -119,11 +119,10 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'show film should fail due to film not found' do
-    @user = users(:jake)
-    sign_in(@user)
+    sign_in_as(:jake)
 
-    show film_url(9999999999)
+    get film_url(9999999999)
     assert_equal('Film not found', flash[:error])
-    assert_redirect_to(films_path)
+    assert_redirected_to(films_path)
   end
 end
