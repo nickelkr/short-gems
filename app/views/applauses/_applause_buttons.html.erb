@@ -24,7 +24,11 @@
             data-method="POST"><strong>+</strong></button>
         <% end %>
       </div>
-      <div class="col-10 category-vote-label"><%= category.upcase %></div>
+      <div class="col-10 category-vote-label"><%= category.upcase %>
+        <% if  params[:action] == 'show' %>
+          + <%= film.applauses.where(category: category).count %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 </div>
