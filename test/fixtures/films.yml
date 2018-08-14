@@ -5,11 +5,13 @@ one:
   title: 'Hotel Chevalier'
   runtime: 13
   user: kyle
+  source: youtube
 
 two:
   external_id: 'otxlzSMcBTo'
   title: 'The Big Shave'
   runtime: john
+  source: youtube
 
 # These were taking a really long time to load for the system tests.
 # Since we're not executing those tests, I'm also commenting this out
