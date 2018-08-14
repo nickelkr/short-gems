@@ -6,15 +6,10 @@ class FilmsController < ApplicationController
   def create
     link = film_params[:external_id]
 
-    external_id = ExternalIDExtractor.new(link).perform
-    film = current_user.films.build(film_params.merge({external_id: external_id})) if external_id
+    source_info = ExternalIDExtractor.new(link).perform
+    film = current_user.films.build(film_params.merge(source_info)) if source_info.present?
 
-    if film.save
-      current_user.films.create(film_params.merge({external_id: external_id}))
-      flash[:success] = 'Film added'
-    else
-      flash[:error] = film.errors.full_messages.first
-    end
+    film.save ? flash[:success] = 'Film added' : flash[:error] = film.errors.full_messages.first
 
   rescue StandardError => e
     flash[:error] = e.message

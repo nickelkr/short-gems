@@ -8,7 +8,7 @@ class ExternalIDExtractor
   def perform
     case
     when (yt = Youtube::Extractor.new(uri)).valid_source?
-      yt.extract
+      { external_id: yt.extract, source: :youtube }
     else
       raise StandardError.new('Only YouTube videos are currently supported.')
     end

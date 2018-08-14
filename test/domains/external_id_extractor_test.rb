@@ -10,7 +10,7 @@ class ExternalIDExtractorTest < ActiveSupport::TestCase
     mock.expect(:extract, EX_ID)
 
     Youtube::Extractor.stub(:new, mock) do
-      assert_equal(EX_ID, ExternalIDExtractor.new(GOOD_URL).perform)
+      assert_equal({external_id: EX_ID, source: :youtube}, ExternalIDExtractor.new(GOOD_URL).perform)
     end
 
     assert_mock(mock)

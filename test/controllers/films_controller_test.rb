@@ -9,7 +9,7 @@ class FilmsControllerTest < ActionDispatch::IntegrationTest
         {
           title: 'Hotel Cevalier',
           runtime: 13,
-          external_id: 'https://youtu.be/stock-id1'
+          external_id: 'https://youtu.be/stock-id1',
         }.merge(opts)
       }
     end
