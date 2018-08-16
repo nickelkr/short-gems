@@ -21,6 +21,7 @@ function postApplause(filmId, category, button) {
                      button.attr('class', 'btn btn-primary btn-round')
 
                      updateTotal(response.film.id, response.applause.total);
+                     updateCategoryTotal(response.film.id, category, response.applause.where(category: category).total);
                    }
           }
   )
@@ -36,10 +37,17 @@ function deleteApplause(filmId, applauseId, button) {
                      button.removeAttr('data-category-id');
                      button.attr('class', 'btn btn-outline-primary btn-round')
 
-                     updateTotal(response.film.id, response.applause.total)
+                     updateTotal(response.film.id, response.applause.total);
+                     updateCategoryTotal(response.film.id, category, response.applause.where(category: category).total);
+
                    }
          }
   )
+}
+
+function updateCategoryCount(filmId, category, count) {
+  total = $('strong[data-film-id="' + filmId + '"][data-type="' + category + ' total"]')[0]
+  total.innerHTML = ('+ ' + count)
 }
 
 function updateTotal(filmId, count) {
