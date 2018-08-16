@@ -78,4 +78,23 @@ class ApplausesTest < ApplicationSystemTestCase
 
     assert_current_path('/users/sign_in')
   end
+
+  JAKE_PASS = '1234567890'
+  test 'show page voting' do
+    visit new_user_session_path
+    sign_in_from_view(:jake, JAKE_PASS)
+
+    film = films(:one)
+
+    visit films_path(film.id)
+
+    assert_difference('Applause.count') do
+      button_with_attr_values(film_id: film.id, category: 'story').click
+      sleep 0.5
+    end
+
+    applause = film.applauses.last
+    assert_equal(user, applause.user)
+    assert_equal('story', applause.category)
+  end
 end

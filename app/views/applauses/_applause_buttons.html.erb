@@ -24,7 +24,11 @@
             data-method="POST"><strong>+</strong></button>
         <% end %>
       </div>
-      <div class="col-10 category-vote-label"><%= category.upcase %></div>
+      <div class="col-10 category-vote-label"><%= category.upcase %>
+        <% if  params[:action] == 'show' %>
+          <strong data-film-id='<%= film.id %>' data-type="<%= category %> total">+ <%= film.applauses.where(category: category).count %></strong>
+        <% end %>
+      </div>
     </div>
   <% end %>
 </div>
